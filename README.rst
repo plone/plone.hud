@@ -32,7 +32,7 @@ Configuration
 Development
 ===========
 
-.. soucecode:: bash
+.. sourcecode:: bash
 
     $ git clone git@github.com/plone/plone.hud
     $ cd plone.hud
