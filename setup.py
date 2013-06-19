@@ -26,6 +26,8 @@ setup(
         "Programming Language :: Python",
         "Environment :: Web Environment",
         "Operating System :: OS Independent",
+        "Development Status :: 1 - Planning",
+        # "Development Status :: 2 - Pre-Alpha",
     ],
     keywords='Plone HUD',
     author='Matej Cotman',
