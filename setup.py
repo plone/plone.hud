@@ -12,8 +12,7 @@ def read(*rnames):
 
 long_description = \
     read('README.rst') + \
-    read('docs', 'CHANGELOG.rst') + \
-    read('docs', 'LICENSE.rst')
+    read('docs', 'CHANGELOG.rst')
 
 setup(
     name='plone.hud',
@@ -33,7 +32,7 @@ setup(
     author='Matej Cotman',
     author_email='cotman.matej@gmail.com',
     url='http://pypi.python.org/pypi/plone.hud',
-    license='BSD',
+    license='GPL version 2',
     packages=find_packages('src', exclude=['ez_setup']),
     namespace_packages=['plone'],
     package_dir={'': 'src'},
