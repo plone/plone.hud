@@ -12,7 +12,6 @@ Developer documentation
 
 
 .. include:: CHANGELOG.rst
-.. include:: LICENSE.rst
 
 Indices and tables
 ==================
