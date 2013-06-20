@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-from plone.hud import normalize_name
+from plone.hud import register_hud_panel
+from plone.hud import unregister_hud_panel
+from plone.hud.testing import IntegrationTestCase
 
-import unittest2
 
+class TestUtils(IntegrationTestCase):
 
-class TestUtils(unittest2.TestCase):
+    def test_register_panel_cycle(self):
+        panel_name = "Sheeps"
 
-    def test_normalize_name(self):
-        self.assertEqual(
-            normalize_name("HUD Users Panel"),
-            "hud_users_panel"
-        )
-        self.assertEqual(
-            normalize_name("HUD_Users_Panel"),
-            "hud_users_panel"
-        )
+        panel_id = register_hud_panel(panel_name)
+
+        self.assertEqual(panel_id, "hud_sheeps")
+
+        panel_id = unregister_hud_panel(panel_name)
+
+        self.assertEqual(panel_id, "hud_sheeps")
