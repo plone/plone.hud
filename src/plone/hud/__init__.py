@@ -2,7 +2,10 @@
 """Init and utils."""
 
 from plone import api
-from plone.hud import conf
+from plone.hud.misc import CONFIGLET_CATEGORY
+from plone.hud.misc import get_panel_id
+from plone.hud.misc import get_panel_label
+from plone.hud.misc import PROJECT_NAME
 from zope.i18nmessageid import MessageFactory
 
 _ = MessageFactory('plone.hud')
@@ -10,25 +13,6 @@ _ = MessageFactory('plone.hud')
 
 def initialize(context):
     """Initializer called when used as a Zope 2 product."""
-
-
-def normalize_name(name):
-    result = ""
-    for c in name:
-        if c in [chr(32), '_']:
-            c = '_'
-        elif not str.isalnum(c):
-            continue
-        result += c
-    return result.lower()
-
-
-def get_panel_id(name):
-    return normalize_name("{0}_{1}".format(conf.PREFIX, name))
-
-
-def get_panel_label(name):
-    return "{0} {1}".format(conf.PREFIX, name)
 
 
 def register_hud_panel(name):
@@ -44,9 +28,9 @@ def register_hud_panel(name):
         'name': configlet_label,
         'action': 'string:${{portal_url}}/{0}'.format(configlet_id),
         'condition': '',
-        'category': conf.CONFIGLET_CATEGORY,
+        'category': CONFIGLET_CATEGORY,
         'visible': 1,
-        'appId': conf.PROJECT_NAME,
+        'appId': PROJECT_NAME,
         'permission': 'ManagePortal',
         'imageUrl': ''
     }

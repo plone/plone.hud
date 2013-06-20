@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from five import grok
 from plone import api
-from plone.hud import conf
-from plone.hud import normalize_name
+from plone.hud.misc import CONFIGLET_CATEGORY
+from plone.hud.misc import normalize_name
+from plone.hud.misc import PREFIX
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
 
@@ -13,9 +14,9 @@ class HUDPanelsVocabulary(object):
     def __call__(self, context):
         portal_controlpanel = api.portal.get_tool(name='portal_controlpanel')
         configlets = portal_controlpanel.enumConfiglets(
-            group=conf.CONFIGLET_CATEGORY
+            group=CONFIGLET_CATEGORY
         )
-        prefix = normalize_name(conf.PREFIX + '_')
+        prefix = normalize_name(PREFIX + '_')
 
         titles = [c['title'] for c in configlets
                   if c['id'].startswith(prefix)]
