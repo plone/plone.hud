@@ -2,9 +2,10 @@
 from five import grok
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.registry.browser.controlpanel import RegistryEditForm
+from plone.hud import conf
+from plone.hud.interfaces import IHUDSettings
 from plone.z3cform import layout
 from Products.CMFCore.interfaces import ISiteRoot
-from plone.hud.interfaces import IHUDSettings
 
 
 class HUDSettingsEditForm(RegistryEditForm):
@@ -12,7 +13,7 @@ class HUDSettingsEditForm(RegistryEditForm):
     Define form logic
     """
     schema = IHUDSettings
-    label = u"HUD settings"
+    label = conf.SETTINGS_LABEL
 
 
 class HUDSettingsView(grok.CodeView):
@@ -20,7 +21,7 @@ class HUDSettingsView(grok.CodeView):
     View which wrap the settings form using ControlPanelFormWrapper
     to a HTML boilerplate frame.
     """
-    grok.name("hud_settings")
+    grok.name(conf.SETTINGS_ID)
     grok.context(ISiteRoot)
 
     def render(self):
