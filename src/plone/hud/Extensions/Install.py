@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
+from plone import api
+from plone.hud import conf
 from plone.hud.interfaces import IHUDSettings
 from plone.registry.interfaces import IRegistry
-from Products.CMFCore.utils import getToolByName
 from StringIO import StringIO
 from zope.component import getUtility
 
 
-PROJECTNAME = 'plone.hud'
-
 # Configlets to be added to control panels or removed from them
 configlets = ({
-    'id': 'MyProductSetup',
-    'name': 'My Product',
-    'action': 'string:${portal_url}/hud_settings',
+    'id': conf.SETTINGS_ID,
+    'name': conf.SETTINGS_LABEL,
+    'action': 'string:${{portal_url}}/{0}'.format(conf.SETTINGS_ID),
     'condition': '',
-    'category': 'Products',
+    'category': conf.CONFIGLET_CATEGORY,
     'visible': 1,
-    'appId': PROJECTNAME,
+    'appId': conf.PROJECT_NAME,
     'permission': 'ManagePortal',
     'imageUrl': ''
 },)
@@ -29,13 +28,13 @@ def install(self):
     registry.registerInterface(IHUDSettings)
 
     # add the configlets to the portal control panel
-    configTool = getToolByName(self, 'portal_controlpanel', None)
-    if configTool:
-        for conf in configlets:
-            configTool.registerConfiglet(**conf)
-            out.write('Added configlet %s\n' % conf['id'])
+    config_tool = api.portal.get_tool(name='portal_controlpanel')
+    if config_tool:
+        for configlet in configlets:
+            config_tool.registerConfiglet(**configlet)
+            out.write('Added configlet %s\n' % configlet['id'])
 
-    print >> out, "Successfully installed %s." % PROJECTNAME
+    print >> out, "Successfully installed %s." % conf.PROJECT_NAME
     return out.getvalue()
 
 
@@ -43,11 +42,11 @@ def uninstall(self):
     out = StringIO()
 
     # remove the configlets from the portal control panel
-    configTool = getToolByName(self, 'portal_controlpanel', None)
-    if configTool:
-        for conf in configlets:
-            configTool.unregisterConfiglet(conf['id'])
-            out.write('Removed configlet %s\n' % conf['id'])
+    config_tool = api.portal.get_tool(name='portal_controlpanel')
+    if config_tool:
+        for configlet in configlets:
+            config_tool.unregisterConfiglet(configlet['id'])
+            out.write('Removed configlet %s\n' % configlet['id'])
 
-    print >> out, "Successfully uninstalled %s." % PROJECTNAME
+    print >> out, "Successfully uninstalled %s." % conf.PROJECT_NAME
     return out.getvalue()
