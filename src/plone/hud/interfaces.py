@@ -2,13 +2,18 @@
 """Module where all interfaces, events and exceptions live."""
 
 from plone.hud.misc import PREFIX
-from plone.theme.interfaces import IDefaultPloneLayer
 from zope import schema
 from zope.interface import Interface
 
 
-class IPloneHudLayer(IDefaultPloneLayer):
-    """Marker interface that defines a Zope 3 browser layer."""
+class IPloneHudLayer(Interface):
+    """ A layer specific for this add-on product.
+
+    This interface is referred in browserlayer.xml.
+
+    All views and viewlets register against this layer will appear on
+    your Plone site only when the add-on installer has been run.
+    """
 
 
 class IHUDSettings(Interface):
