@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 """Module where all interfaces, events and exceptions live."""
 
+from plone import api
+from plone.hud.misc import CONFIGLET_CATEGORY
 from plone.hud.misc import PREFIX
+from plone.hud.misc import normalize_name
 from zope import schema
 from zope.interface import Interface
+from zope.interface import alsoProvides
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary
 
 
 class IPloneHudLayer(Interface):
@@ -16,10 +22,26 @@ class IPloneHudLayer(Interface):
     """
 
 
+def panels_source(context):
+    portal_controlpanel = api.portal.get_tool(name='portal_controlpanel')
+    configlets = portal_controlpanel.enumConfiglets(
+        group=CONFIGLET_CATEGORY
+    )
+    prefix = normalize_name(PREFIX + '_')
+
+    titles = [c['title'] for c in configlets
+              if c['id'].startswith(prefix)]
+
+    result = SimpleVocabulary.fromValues(titles)
+    return result
+
+alsoProvides(panels_source, IContextSourceBinder)
+
+
 class IHUDSettings(Interface):
     """ Define settings data structure """
 
     hud_panel = schema.Choice(
         title=u"{0} Panel".format(PREFIX),
-        vocabulary="plone.hud.panels_vocabulary"
+        source=panels_source
     )
