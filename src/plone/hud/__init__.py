@@ -16,6 +16,7 @@ def initialize(context):
 
 
 def register_hud_panel(name):
+    """Register HUD panel by name."""
     config_tool = api.portal.get_tool(name='portal_controlpanel')
 
     if not config_tool:
@@ -41,6 +42,7 @@ def register_hud_panel(name):
 
 
 def unregister_hud_panel(name):
+    """Unregister HUD panel by the same name used for registering."""
     config_tool = api.portal.get_tool(name='portal_controlpanel')
 
     if not config_tool:

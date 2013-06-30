@@ -23,6 +23,7 @@ class IPloneHudLayer(Interface):
 
 
 def panels_source(context):
+    """Returns all panels in the SimpleVocabulary object."""
     portal_controlpanel = api.portal.get_tool(name='portal_controlpanel')
     configlets = portal_controlpanel.enumConfiglets(
         group=CONFIGLET_CATEGORY
