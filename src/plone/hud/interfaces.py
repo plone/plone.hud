@@ -3,8 +3,6 @@
 
 from plone import api
 from plone.hud.misc import CONFIGLET_CATEGORY
-from plone.hud.misc import PREFIX
-from plone.hud.misc import normalize_name
 from zope import schema
 from zope.interface import Interface
 from zope.interface import alsoProvides
@@ -28,11 +26,7 @@ def panels_source(context):
     configlets = portal_controlpanel.enumConfiglets(
         group=CONFIGLET_CATEGORY
     )
-    prefix = normalize_name(PREFIX + '_')
-
-    titles = [c['title'] for c in configlets
-              if c['id'].startswith(prefix)]
-
+    titles = [c['title'] for c in configlets]
     result = SimpleVocabulary.fromValues(titles)
     return result
 
@@ -43,6 +37,6 @@ class IHUDSettings(Interface):
     """ Define settings data structure """
 
     hud_panel = schema.Choice(
-        title=u"{0} Panel".format(PREFIX),
+        title=u"HUD Panel",
         source=panels_source
     )

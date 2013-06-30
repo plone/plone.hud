@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-CONFIGLET_CATEGORY = 'Products'
-PREFIX = 'HUD'
+CONFIGLET_CATEGORY = 'HUD'
 PROJECT_NAME = 'plone.hud'
 SETTINGS_NAME = 'Settings'
 
@@ -18,12 +17,20 @@ def normalize_name(name):
 
 
 def get_panel_id(name):
-    return normalize_name("{0}_{1}".format(PREFIX, name))
+    """Get HUD panel id from name.
+
+    This function is used so the
+    registering of HUD panels uses the same id as unregistering,
+    both of those functions have only name parameter for simplicity
+    and both functions need the same panel id therefore this function
+    along with the normalize_name function are necessary.
+    """
+    return "hud_{0}".format(normalize_name(name))
 
 SETTINGS_ID = get_panel_id(SETTINGS_NAME)
 
 
 def get_panel_label(name):
-    return "{0} {1}".format(PREFIX, name)
+    return u"HUD {0}".format(name)
 
 SETTINGS_LABEL = get_panel_label(SETTINGS_NAME)
