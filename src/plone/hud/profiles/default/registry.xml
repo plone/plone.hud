@@ -1,5 +1,0 @@
-<registry>
-    <records interface="plone.hud.interfaces.IHUDSettings">
-        <omit>hud_panel</omit>
-    </records>
-</registry>
