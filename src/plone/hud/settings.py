@@ -1,18 +1,46 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
+from plone import api
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
-from plone.app.registry.browser.controlpanel import RegistryEditForm
-from plone.hud.interfaces import IHUDSettings
+from plone.hud.misc import CONFIGLET_CATEGORY
 from plone.hud.misc import SETTINGS_LABEL
 from plone.z3cform import layout
+from z3c.form import field
+from z3c.form import form
+from zope.interface import alsoProvides
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary
+
+import zope
 
 
-class HUDSettingsEditForm(RegistryEditForm):
+def panels_source(context):
+    """Returns all panels in the SimpleVocabulary object."""
+    portal_controlpanel = api.portal.get_tool(name='portal_controlpanel')
+    configlets = portal_controlpanel.enumConfiglets(
+        group=CONFIGLET_CATEGORY
+    )
+    titles = [c['title'] for c in configlets]
+    result = SimpleVocabulary.fromValues(titles)
+    return result
+
+alsoProvides(panels_source, IContextSourceBinder)
+
+
+class HUDSettingsEditForm(form.EditForm):
     """
     Define form logic
     """
-    schema = IHUDSettings
     label = SETTINGS_LABEL
+
+    hud_panel = zope.schema.Choice(
+        title=u"HUD Panel",
+        source=panels_source,
+        default=SimpleVocabulary.fromValues(["None"])
+    )
+    hud_panel.__name__ = 'hud_panel'
+
+    fields = field.Fields(hud_panel)
 
 
 class HUDSettingsView(BrowserView):
