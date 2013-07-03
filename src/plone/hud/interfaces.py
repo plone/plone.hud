@@ -38,5 +38,6 @@ class IHUDSettings(Interface):
 
     hud_panel = schema.Choice(
         title=u"HUD Panel",
-        source=panels_source
+        source=panels_source,
+        default=SimpleVocabulary.fromValues(["None"])
     )
