@@ -29,15 +29,15 @@ bin/sphinx-build: .installed.cfg
 	bin/buildout $(options)
 
 bin/buildout: $(python) buildout.cfg bootstrap.py
-	$(python) bootstrap.py -d
+	$(python) bootstrap.py -d --version 1.7.1
 	@touch $@
 
 $(python):
-	virtualenv -p python$(version) --no-site-packages .
+	virtualenv -p python$(version) --no-site-packages --no-setuptools .
 	@touch $@
 
 tests: .installed.cfg
-	@bin/test
+	@bin/test --color
 	@bin/flake8 setup.py
 	@bin/flake8 src/plone/hud
 	@for pt in `find src/plone/hud -name "*.pt"` ; do bin/zptlint $$pt; done
