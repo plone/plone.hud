@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Global HUD settings view."""
+
 from Products.Five.browser import BrowserView
 from plone import api
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper

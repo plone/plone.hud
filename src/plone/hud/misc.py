@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Misc functions and global constants."""
 
 CONFIGLET_CATEGORY = 'HUD'
 PROJECT_NAME = 'plone.hud'
