@@ -13,16 +13,13 @@
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-        <dl class="portlet portletListPortlet"
-            i18n:domain="plone.hud">
+        <dl i18n:domain="plone.hud">
             
-            <dt class="portletHeader">
-              <span class="portletTopLeft"></span>
+            <dt>
               <tal:title i18n:translate="">HUD Panels</tal:title>
-              <span class="portletTopRight"></span>
             </dt>
 
-            <dd class="portletItem" tal:repeat="panel view/hud_panels">
+            <dd tal:repeat="panel view/hud_panels">
               <a tal:attributes="href python: panel[1]" tal:content="python: panel[0]" />
             </dd>
         </dl>
