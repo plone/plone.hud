@@ -6,15 +6,29 @@
 
     <!-- Publish static files -->
     <browser:resourceDirectory
-      name="plone.hud"
-      directory="static"
-      />
+        name="plone.hud"
+        directory="static"
+        />
 
     <browser:page
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      name="hud_settings"
-      permission="cmf.ManagePortal"
-      class="plone.hud.settings.HUDSettingsView"
-      />
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="hud_settings"
+        permission="cmf.ManagePortal"
+        class="plone.hud.settings.HUDSettingsView"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="hud"
+        permission="cmf.ManagePortal"
+        class="plone.hud.panel.HUDPanelView"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="listportlet"
+        template="templates/listportlet.pt"
+        permission="cmf.ManagePortal"
+        />
 
 </configure>
