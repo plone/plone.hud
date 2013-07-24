@@ -4,33 +4,56 @@
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone import api
+from plone.hud import _
 from plone.hud.misc import CONFIGLET_CATEGORY
+from plone.memoize.view import memoize
 
 
 class HUDPanelView(BrowserView):
-    main_template = ViewPageTemplateFile('templates/panel.pt')
+    main_template = ViewPageTemplateFile('browser/templates/panel.pt')
 
     def render(self):
+        self.portal = api.portal.get()
+        self.portal_url = self.portal.absolute_url() + "/"
+        self.hud_title = _(u"HUD Panels")
+        self.hud_url = "{0}/@@hud".format(self.portal_url)
+        self.first_panel = self.list_panels()[0]
+        if "panel_name" in self.request.form:
+            name = self.request.form["panel_name"]
+        else:
+            name = self.first_panel["name"]
+        self.current_panel = self.get_panel(name)
         return self.main_template()
 
     def __call__(self):
         return self.render()
 
-    def render_panel(self):
-        return None
+    def panel_view(self):
+        panel = self.portal.restrictedTraverse(self.current_panel["name"])
+        return panel.render()
 
-    def list_panels(self):
-        """Returns all panels in the list."""
+    def get_panels(self):
         portal_controlpanel = api.portal.get_tool(name='portal_controlpanel')
         configlets = portal_controlpanel.enumConfiglets(
             group=CONFIGLET_CATEGORY
         )
-        portal_url = api.portal.get().absolute_url()
         result = []
         for configlet in configlets:
-            path = self._get_traversable_path(portal_url, configlet["url"])
-            result += [(configlet["title"], path)]
+            name = configlet["url"].replace(self.portal_url, "")
+            name = name.replace("@@", "")
+            result += [{
+                "title": configlet["title"],
+                "name": name,
+                "url": "{0}@@hud?panel_name={1}".format(self.portal_url, name)
+            }]
         return result
 
-    def _get_traversable_path(self, portal_url, portlet_url):
-        return "hud" + portlet_url[len(portal_url):]
+    def get_panel(self, name):
+        for panel in self.list_panels():
+            if panel["name"] == name:
+                return panel
+        return None
+
+    @memoize
+    def list_panels(self):
+        return self.get_panels()
