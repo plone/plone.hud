@@ -5,12 +5,12 @@
     i18n:domain="plone.hud">
 
     <configlet
-        title="HUD Settings"
-        action_id="hud.settings"
+        title="HUD Panels"
+        action_id="hud.panels"
         appId="hud"
         category="Plone"
         condition_expr=""
-        url_expr="string:${portal_url}/@@hud_settings"
+        url_expr="string:${portal_url}/@@hud"
         icon_expr=""
         visible="True"
         i18n:attributes="title">
