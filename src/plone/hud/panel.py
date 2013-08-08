@@ -16,7 +16,7 @@ class HUDPanelView(BrowserView):
         self.portal = api.portal.get()
         self.portal_url = self.portal.absolute_url() + "/"
         self.hud_title = _(u"HUD Panels")
-        self.hud_url = "{0}/@@hud".format(self.portal_url)
+        self.hud_url = "{0}@@hud".format(self.portal_url)
         self.first_panel = self.list_panels()[0]
         if "panel_name" in self.request.form:
             name = self.request.form["panel_name"]
