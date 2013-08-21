@@ -41,8 +41,12 @@ class HUDPanelView(BrowserView):
         for configlet in configlets:
             name = configlet["url"].replace(self.portal_url, "")
             name = name.replace("@@", "")
+            panel = self.portal.restrictedTraverse(name)
+            if not panel:
+                continue
+            title = getattr(panel, 'title', None)
             result += [{
-                "title": configlet["title"],
+                "title": title if title else configlet["title"],
                 "name": name,
                 "url": "{0}@@hud?panel_name={1}".format(self.portal_url, name)
             }]
