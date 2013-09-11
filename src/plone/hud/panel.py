@@ -8,6 +8,10 @@ from plone.hud import _
 from plone.hud.misc import CONFIGLET_CATEGORY
 from plone.memoize.view import memoize
 
+import logging
+
+logger = logging.getLogger("plone.app.hud.panel")
+
 
 class HUDPanelView(BrowserView):
     main_template = ViewPageTemplateFile('browser/templates/panel.pt')
@@ -41,15 +45,18 @@ class HUDPanelView(BrowserView):
         for configlet in configlets:
             name = configlet["url"].replace(self.portal_url, "")
             name = name.replace("@@", "")
-            panel = self.portal.restrictedTraverse(name)
-            if not panel:
-                continue
-            title = getattr(panel, 'title', None)
-            result += [{
-                "title": title if title else configlet["title"],
-                "name": name,
-                "url": "{0}@@hud?panel_name={1}".format(self.portal_url, name)
-            }]
+            try:
+                panel = self.portal.restrictedTraverse(name)
+                if not panel:
+                    continue
+                title = getattr(panel, 'title', None)
+                result += [{
+                    "title": title if title else configlet["title"],
+                    "name": name,
+                    "url": "{0}@@hud?panel_name={1}".format(self.portal_url, name)
+                }]
+            except KeyError as ke:
+                logger.warning("KeyError message: {0}".format(ke.message))
         return result
 
     def get_panel(self, name):
