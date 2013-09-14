@@ -53,7 +53,9 @@ class HUDPanelView(BrowserView):
                 result += [{
                     "title": title if title else configlet["title"],
                     "name": name,
-                    "url": "{0}@@hud?panel_name={1}".format(self.portal_url, name)
+                    "url": "{0}@@hud?panel_name={1}".format(
+                        self.portal_url, name
+                    )
                 }]
             except KeyError as ke:
                 logger.warning("KeyError message: {0}".format(ke.message))

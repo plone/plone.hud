@@ -4,21 +4,6 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="plone.hud">
 
-    <!-- Publish static files -->
-    <browser:resourceDirectory
-        name="plone.hud"
-        directory="static"
-        />
-
-<!-- comment this for now
-    <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        name="hud_settings"
-        permission="cmf.ManagePortal"
-        class="plone.hud.settings.HUDSettingsView"
-        />
--->
-
     <browser:page
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         name="hud"
