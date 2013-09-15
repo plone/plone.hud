@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Test utilities, helper functions."""
+
 from plone.hud import register_hud_panel
 from plone.hud import unregister_hud_panel
 from plone.hud.testing import IntegrationTestCase
