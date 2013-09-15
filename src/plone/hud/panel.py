@@ -21,12 +21,17 @@ class HUDPanelView(BrowserView):
         self.portal_url = self.portal.absolute_url() + "/"
         self.hud_title = _(u"HUD Panels")
         self.hud_url = "{0}@@hud".format(self.portal_url)
-        self.first_panel = self.list_panels()[0]
-        if "panel_name" in self.request.form:
-            name = self.request.form["panel_name"]
+        panels = self.list_panels()
+        if panels:
+            self.first_panel = panels[0]
+            if "panel_name" in self.request.form:
+                name = self.request.form["panel_name"]
+            else:
+                name = self.first_panel["name"]
+            self.current_panel = self.get_panel(name)
         else:
-            name = self.first_panel["name"]
-        self.current_panel = self.get_panel(name)
+            self.first_panel = None
+            self.current_panel = None
         return self.main_template()
 
     def __call__(self):
