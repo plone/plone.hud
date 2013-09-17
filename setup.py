@@ -16,7 +16,7 @@ long_description = \
 
 setup(
     name='plone.hud',
-    version='0.1',
+    version='1.0a1',
     description="Plone Heads Up Display Framework",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
